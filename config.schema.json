@@ -2,8 +2,8 @@
   "pluginAlias": "TuyaWebPlatform",
   "pluginType": "platform",
   "singular": true,
-  "headerDisplay": "Homebridge plugin for devices using the Tuya Web API.",
-  "footerDisplay": "If you have any suggestions, please open an issue on [GitHub](https://github.com/milo526/homebridge-tuya-web/issues).",
+  "headerDisplay": "Homebridge plugin for Tuya devices using the official Tuya IoT Platform API. See the [setup guide](https://github.com/vhvhxksc4t-sudo/homebridge-tuya-web#readme) for instructions on creating your API credentials.",
+  "footerDisplay": "For issues or questions, please [open an issue on GitHub](https://github.com/vhvhxksc4t-sudo/homebridge-tuya-web/issues).",
   "schema": {
     "type": "object",
     "properties": {
@@ -19,70 +19,70 @@
         "type": "object",
         "required": true,
         "properties": {
-          "username": {
-            "title": "Username",
+          "accessId": {
+            "title": "Access ID",
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "Your Tuya IoT Platform project Access ID (Client ID), found on the project Overview page at platform.tuya.com."
           },
-          "password": {
-            "title": "Password",
+          "accessSecret": {
+            "title": "Access Secret",
             "type": "string",
-            "required": true
+            "required": true,
+            "description": "Your Tuya IoT Platform project Access Secret (Client Secret), found on the project Overview page."
           },
-          "countryCode": {
-            "title": "Country Code",
+          "region": {
+            "title": "Data Center Region",
             "type": "string",
-            "description": "Your account country code, e.g. 1 for USA, 86 for China, 44 for UK.",
-            "required": true
-          },
-          "platform": {
-            "title": "Platform",
-            "type": "string",
-            "default": "form",
+            "default": "us",
+            "description": "The data center region you selected when creating your Tuya IoT Platform project. Must match the region your Smart Life account is registered in.",
             "oneOf": [
               {
-                "title": "Tuya Smart",
-                "enum": ["tuya"]
+                "title": "America (East or West)",
+                "enum": ["us"]
               },
               {
-                "title": "Smart Life",
-                "enum": ["smart_life"]
+                "title": "Central Europe",
+                "enum": ["eu"]
               },
               {
-                "title": "Jinvoo Smart",
-                "enum": ["jinvoo_smart"]
+                "title": "China",
+                "enum": ["cn"]
+              },
+              {
+                "title": "India",
+                "enum": ["in"]
               }
             ],
-            "required": true
+            "required": false
           },
           "pollingInterval": {
             "title": "Polling Interval",
             "type": "number",
-            "description": "The frequency in seconds that the plugin polls the cloud to get device updates. Can be left empty to only fetch on request. Must be 600 or larger",
+            "description": "How often (in seconds) to poll the cloud for device state updates. Leave empty to only fetch on demand. Recommended minimum: 30.",
             "required": false,
-            "minimum": 600
+            "minimum": 30
           }
         }
       },
       "defaults": {
         "title": "Device Settings",
-        "description": "Here you can configure settings for each of your devices.",
+        "description": "Override settings for individual devices.",
         "type": "array",
         "items": {
-          "title": "Overwrite",
+          "title": "Device Override",
           "type": "object",
           "properties": {
             "id": {
-              "title": "Device name or id",
+              "title": "Device name or ID",
               "type": "string",
-              "description": "Can be found in your platform app (device info -> virtual ID) and is exposed during plugin boot (use the Tuya ID)",
+              "description": "The device name from your app, or the Tuya device ID shown in the Homebridge log at startup.",
               "required": true
             },
             "device_type": {
               "title": "Device type",
               "type": "string",
-              "default": "form",
-              "description": "The type that you want the device to be exposed as",
+              "description": "Override the detected device type.",
               "oneOf": [
                 {
                   "title": "Dimmer",
@@ -132,63 +132,63 @@
               "required": true
             },
             "min_temper": {
-              "title": "Minimal Temperature",
+              "title": "Minimum Temperature (°C)",
               "type": "string",
               "pattern": "^-?\\d+(?:\\.[05])?$",
-              "description": "The minimal temperature that you want to be able to set in HomeKit, this must be in half degree celsius intervals.",
-              "placeholder": "0.0",
+              "description": "Minimum settable temperature in HomeKit, in °C with half-degree increments.",
+              "placeholder": "16",
               "required": false
             },
             "max_temper": {
-              "title": "Maximal Temperature",
+              "title": "Maximum Temperature (°C)",
               "type": "string",
               "pattern": "^-?\\d+(?:\\.[05])?$",
-              "description": "The maximal temperature that you want to be able to set in HomeKit, this must be in half degree celsius intervals.",
-              "placeholder": "35.0",
+              "description": "Maximum settable temperature in HomeKit, in °C with half-degree increments.",
+              "placeholder": "30",
               "required": false
             },
             "min_brightness": {
-              "title": "Minimal Brightness",
+              "title": "Minimum Brightness (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "The brightness value that Tuya returns when your light is off.",
+              "description": "Raw brightness value the device reports when off. Used to scale the brightness range.",
               "required": false
             },
             "max_brightness": {
-              "title": "Maximal Brightness",
+              "title": "Maximum Brightness (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "The brightness value that Tuya returns when your light is at its brightest.",
+              "description": "Raw brightness value the device reports at full brightness. Used to scale the brightness range.",
               "required": false
             },
             "min_kelvin": {
-              "title": "Minimal Kelvin",
+              "title": "Minimum Kelvin (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "The kelvin value that Tuya returns when your light is at its warmest (most red).",
+              "description": "Raw value the device reports at warmest (most red) color temperature.",
               "required": false
             },
             "max_kelvin": {
-              "title": "Maximal Kelvin",
+              "title": "Maximum Kelvin (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "The kelvin value that Tuya returns when your light is at its coolest (most blue).",
+              "description": "Raw value the device reports at coolest (most blue) color temperature.",
               "required": false
             },
             "current_temperature_factor": {
               "title": "Temperature Factor",
               "type": "string",
               "pattern": "^\\d+(?:\\.\\d+)?$",
-              "description": "Alters the reported temperatures in HomeKit. I.e. if HomeKit reports 250 while the temperature is 250, enter `0.1` here to report the correct temperature. Defaults to 1, no change.",
-              "placeholder": "I.e. 0.1",
+              "description": "Multiplier for the current temperature reading. Use 0.1 if HomeKit shows 220 when the actual temperature is 22°C.",
+              "placeholder": "0.1",
               "required": false
             },
             "target_temperature_factor": {
               "title": "Target Temperature Factor",
               "type": "string",
               "pattern": "^\\d+(?:\\.\\d+)?$",
-              "description": "Alters the reported target temperatures in HomeKit. Defaults to 1, no change.",
-              "placeholder": "I.e. 0.1",
+              "description": "Multiplier for the target temperature. Defaults to 1 (no change).",
+              "placeholder": "0.1",
               "required": false
             },
             "cover_characteristics": {
@@ -235,27 +235,27 @@
         }
       },
       "scenes": {
-        "title": "Expose Tuya scenes to Homekit",
+        "title": "Expose Tuya scenes to HomeKit",
         "type": "boolean",
         "required": true,
         "default": false
       },
       "scenesWhitelist": {
-        "title": "Tuya scenes to expose to Homekit",
+        "title": "Scenes to expose to HomeKit",
         "type": "array",
         "required": false,
         "items": {
-          "title": "Scene name or id",
+          "title": "Scene name or ID",
           "type": "string",
           "required": true
         }
       },
       "hiddenAccessories": {
-        "title": "Accessories to hide from Homekit",
+        "title": "Accessories to hide from HomeKit",
         "type": "array",
         "required": false,
         "items": {
-          "title": "Accessory name or id",
+          "title": "Accessory name or ID",
           "type": "string",
           "required": true
         }
@@ -267,15 +267,14 @@
       "type": "flex",
       "flex-flow": "row wrap",
       "items": [
-        "options.username",
+        "options.accessId",
         {
-          "key": "options.password",
+          "key": "options.accessSecret",
           "type": "password"
         }
       ]
     },
-    "options.countryCode",
-    "options.platform",
+    "options.region",
     {
       "type": "fieldset",
       "title": "Device Settings",
@@ -383,7 +382,7 @@
         {
           "title": "Hidden accessories",
           "type": "array",
-          "description": "Enter the identifiers of accessories that you wish not to expose to HomeKit.",
+          "description": "Accessories that should not be exposed to HomeKit.",
           "items": [
             {
               "key": "hiddenAccessories[]",
@@ -397,9 +396,9 @@
           "items": [
             "scenes",
             {
-              "title": "Whitelisted scene",
+              "title": "Whitelisted scenes",
               "type": "array",
-              "description": "Enter the scenes that you wish to expose to Homekit, when left empty <b>all</b> scenes will be exposed.",
+              "description": "Specific scenes to expose to HomeKit. When left empty, all scenes are exposed.",
               "condition": {
                 "functionBody": "return (model.scenes)"
               },
