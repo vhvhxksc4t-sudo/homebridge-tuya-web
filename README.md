@@ -12,20 +12,31 @@ A Homebridge plugin for controlling Tuya smart home devices through Apple HomeKi
 
 ## Migrating from the Original Plugin
 
-If you previously used `@milo526/homebridge-tuya-web` or another version of this plugin, read this before installing.
+If you previously used `@milo526/homebridge-tuya-web` or another version of this plugin, read this carefully before starting.
 
-**Both plugins will run simultaneously** unless you explicitly disable the old one. Because they share the same `TuyaWebPlatform` identifier, Homebridge will load both and your devices may appear duplicated in HomeKit.
+### ⚠️ HomeKit Automations Warning
 
-**Steps to migrate cleanly:**
+**If you need to set up a new child bridge during migration, all HomeKit automations tied to your Tuya devices will break and must be recreated manually.** HomeKit does not provide any way to migrate automations between bridges — this is a HomeKit limitation with no workaround.
 
-1. **Back up your `config.json` first** — the Homebridge UI's uninstall will remove the old plugin's config block. You may want to note down any device overrides you had configured before uninstalling.
+If you have many automations, weigh that cost before migrating. The new API is more stable long-term, but the one-time migration cost is real.
+
+### Before You Start
+
+- **Back up your `config.json`** — the Homebridge UI's uninstall removes the old plugin's config block, including any device overrides you had set up. Note these down before proceeding.
+- **Note your device type overrides** — if you had devices set to a different type than their default (e.g. a smart plug configured as `light`), you'll need to re-apply those in the new plugin's Device Settings.
+
+### Migration Steps
+
+1. Note down all device overrides from the old plugin's settings
 2. Install `@vhvhxksc4t/homebridge-tuya-web` via the Homebridge UI plugin search
-3. Configure it with your new Tuya IoT Platform credentials (see setup steps below)
-4. **Disable or uninstall the old plugin** before restarting Homebridge — leaving both active will cause conflicts
-5. Restart Homebridge
-6. If any devices appear duplicated in HomeKit, remove the stale copies via **Homebridge Settings → Remove Single Cached Accessory**
+3. Configure it with your Tuya IoT Platform credentials (see setup steps below)
+4. Re-apply any device type overrides in the new plugin's Device Settings
+5. **Disable the old plugin** (do not uninstall yet) and restart Homebridge
+6. Verify your devices are working correctly
+7. Uninstall the old plugin once satisfied
+8. Remove any stale accessories from the Home app by long-pressing the tile and selecting **Remove Accessory**, or via **Homebridge Settings → Remove Single Cached Accessory**
 
-**Device type overrides carry over** — if you had devices configured as a different type than their default (e.g. a smart plug set to `light`), re-add those same overrides in this plugin's Device Settings. The new API may detect a different default type than the old one did, so check each device after migrating.
+> **Tip:** If Homebridge asks you to set up a new child bridge in HomeKit during this process, doing so will break existing automations. If automation continuity matters, try keeping everything under the main Homebridge bridge rather than a child bridge during the transition.
 
 ---
 
