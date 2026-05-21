@@ -18,11 +18,12 @@ If you previously used `@milo526/homebridge-tuya-web` or another version of this
 
 **Steps to migrate cleanly:**
 
-1. Install `@vhvhxksc4t/homebridge-tuya-web` via the Homebridge UI plugin search
-2. Configure it with your new Tuya IoT Platform credentials (see setup steps below)
-3. **Disable or uninstall the old plugin** before restarting Homebridge — leaving both active will cause conflicts
-4. Restart Homebridge
-5. If any devices appear duplicated in HomeKit, remove the stale copies via **Homebridge Settings → Remove Single Cached Accessory**
+1. **Back up your `config.json` first** — the Homebridge UI's uninstall will remove the old plugin's config block. You may want to note down any device overrides you had configured before uninstalling.
+2. Install `@vhvhxksc4t/homebridge-tuya-web` via the Homebridge UI plugin search
+3. Configure it with your new Tuya IoT Platform credentials (see setup steps below)
+4. **Disable or uninstall the old plugin** before restarting Homebridge — leaving both active will cause conflicts
+5. Restart Homebridge
+6. If any devices appear duplicated in HomeKit, remove the stale copies via **Homebridge Settings → Remove Single Cached Accessory**
 
 **Device type overrides carry over** — if you had devices configured as a different type than their default (e.g. a smart plug set to `light`), re-add those same overrides in this plugin's Device Settings. The new API may detect a different default type than the old one did, so check each device after migrating.
 
