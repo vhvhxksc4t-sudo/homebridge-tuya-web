@@ -10,6 +10,24 @@ A Homebridge plugin for controlling Tuya smart home devices through Apple HomeKi
 
 ---
 
+## Migrating from the Original Plugin
+
+If you previously used `@milo526/homebridge-tuya-web` or another version of this plugin, read this before installing.
+
+**Both plugins will run simultaneously** unless you explicitly disable the old one. Because they share the same `TuyaWebPlatform` identifier, Homebridge will load both and your devices may appear duplicated in HomeKit.
+
+**Steps to migrate cleanly:**
+
+1. Install `@vhvhxksc4t/homebridge-tuya-web` via the Homebridge UI plugin search
+2. Configure it with your new Tuya IoT Platform credentials (see setup steps below)
+3. **Disable or uninstall the old plugin** before restarting Homebridge — leaving both active will cause conflicts
+4. Restart Homebridge
+5. If any devices appear duplicated in HomeKit, remove the stale copies via **Homebridge Settings → Remove Single Cached Accessory**
+
+**Device type overrides carry over** — if you had devices configured as a different type than their default (e.g. a smart plug set to `light`), re-add those same overrides in this plugin's Device Settings. The new API may detect a different default type than the old one did, so check each device after migrating.
+
+---
+
 ## Prerequisites
 
 This plugin requires a free **Tuya IoT Platform** developer account. This is separate from your Smart Life or Tuya Smart app account — you need both.
