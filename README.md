@@ -116,7 +116,7 @@ Add the following to your Homebridge `config.json` under `platforms`, replacing 
 | Region | Code |
 |---|---|
 | China | `cn` |
-| America (East or West) | `us` |
+| Western America (US & Canada) | `us` |
 | Central Europe | `eu` |
 | India | `in` |
 

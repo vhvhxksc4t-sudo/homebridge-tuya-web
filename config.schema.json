@@ -38,7 +38,7 @@
             "description": "The data center region you selected when creating your Tuya IoT Platform project. Must match the region your Smart Life account is registered in.",
             "oneOf": [
               {
-                "title": "America (East or West)",
+                "title": "Western America (US & Canada)",
                 "enum": ["us"]
               },
               {
