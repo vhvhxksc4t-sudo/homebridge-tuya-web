@@ -10,25 +10,21 @@
       "name": {
         "title": "Name",
         "type": "string",
-        "required": true,
         "default": "TuyaWebPlatform",
         "description": "You shouldn't need to change this."
       },
       "options": {
         "title": "",
         "type": "object",
-        "required": true,
         "properties": {
           "accessId": {
             "title": "Access ID",
             "type": "string",
-            "required": true,
             "description": "Your Tuya IoT Platform project Access ID (Client ID), found on the project Overview page at platform.tuya.com."
           },
           "accessSecret": {
             "title": "Access Secret",
             "type": "string",
-            "required": true,
             "description": "Your Tuya IoT Platform project Access Secret (Client Secret), found on the project Overview page."
           },
           "region": {
@@ -39,31 +35,41 @@
             "oneOf": [
               {
                 "title": "Western America (US & Canada)",
-                "enum": ["us"]
+                "enum": [
+                  "us"
+                ]
               },
               {
                 "title": "Central Europe",
-                "enum": ["eu"]
+                "enum": [
+                  "eu"
+                ]
               },
               {
                 "title": "China",
-                "enum": ["cn"]
+                "enum": [
+                  "cn"
+                ]
               },
               {
                 "title": "India",
-                "enum": ["in"]
+                "enum": [
+                  "in"
+                ]
               }
-            ],
-            "required": false
+            ]
           },
           "pollingInterval": {
             "title": "Polling Interval",
             "type": "number",
             "description": "How often (in seconds) to poll the cloud for device state updates. Leave empty to only fetch on demand. Recommended minimum: 30.",
-            "required": false,
             "minimum": 30
           }
-        }
+        },
+        "required": [
+          "accessId",
+          "accessSecret"
+        ]
       },
       "defaults": {
         "title": "Device Settings",
@@ -76,8 +82,7 @@
             "id": {
               "title": "Device name or ID",
               "type": "string",
-              "description": "The device name from your app, or the Tuya device ID shown in the Homebridge log at startup.",
-              "required": true
+              "description": "The device name from your app, or the Tuya device ID shown in the Homebridge log at startup."
             },
             "device_type": {
               "title": "Device type",
@@ -86,110 +91,123 @@
               "oneOf": [
                 {
                   "title": "Dimmer",
-                  "enum": ["dimmer"]
+                  "enum": [
+                    "dimmer"
+                  ]
                 },
                 {
                   "title": "Fan",
-                  "enum": ["fan"]
+                  "enum": [
+                    "fan"
+                  ]
                 },
                 {
                   "title": "Garage Door",
-                  "enum": ["garage"]
+                  "enum": [
+                    "garage"
+                  ]
                 },
                 {
                   "title": "Light",
-                  "enum": ["light"]
+                  "enum": [
+                    "light"
+                  ]
                 },
                 {
                   "title": "Outlet",
-                  "enum": ["outlet"]
+                  "enum": [
+                    "outlet"
+                  ]
                 },
                 {
                   "title": "Scene",
-                  "enum": ["scene"]
+                  "enum": [
+                    "scene"
+                  ]
                 },
                 {
                   "title": "Switch",
-                  "enum": ["switch"]
+                  "enum": [
+                    "switch"
+                  ]
                 },
                 {
                   "title": "Temperature Sensor",
-                  "enum": ["temperature_sensor"]
+                  "enum": [
+                    "temperature_sensor"
+                  ]
                 },
                 {
                   "title": "Thermostat",
-                  "enum": ["climate"]
+                  "enum": [
+                    "climate"
+                  ]
                 },
                 {
                   "title": "Window Cover",
-                  "enum": ["cover"]
+                  "enum": [
+                    "cover"
+                  ]
                 },
                 {
                   "title": "Window",
-                  "enum": ["window"]
+                  "enum": [
+                    "window"
+                  ]
                 }
-              ],
-              "required": true
+              ]
             },
             "min_temper": {
-              "title": "Minimum Temperature (°C)",
+              "title": "Minimum Temperature (\u00b0C)",
               "type": "string",
               "pattern": "^-?\\d+(?:\\.[05])?$",
-              "description": "Minimum settable temperature in HomeKit, in °C with half-degree increments.",
-              "placeholder": "16",
-              "required": false
+              "description": "Minimum settable temperature in HomeKit, in \u00b0C with half-degree increments.",
+              "placeholder": "16"
             },
             "max_temper": {
-              "title": "Maximum Temperature (°C)",
+              "title": "Maximum Temperature (\u00b0C)",
               "type": "string",
               "pattern": "^-?\\d+(?:\\.[05])?$",
-              "description": "Maximum settable temperature in HomeKit, in °C with half-degree increments.",
-              "placeholder": "30",
-              "required": false
+              "description": "Maximum settable temperature in HomeKit, in \u00b0C with half-degree increments.",
+              "placeholder": "30"
             },
             "min_brightness": {
               "title": "Minimum Brightness (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "Raw brightness value the device reports when off. Used to scale the brightness range.",
-              "required": false
+              "description": "Raw brightness value the device reports when off. Used to scale the brightness range."
             },
             "max_brightness": {
               "title": "Maximum Brightness (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "Raw brightness value the device reports at full brightness. Used to scale the brightness range.",
-              "required": false
+              "description": "Raw brightness value the device reports at full brightness. Used to scale the brightness range."
             },
             "min_kelvin": {
               "title": "Minimum Kelvin (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "Raw value the device reports at warmest (most red) color temperature.",
-              "required": false
+              "description": "Raw value the device reports at warmest (most red) color temperature."
             },
             "max_kelvin": {
               "title": "Maximum Kelvin (raw)",
               "type": "string",
               "pattern": "^-?\\d+$",
-              "description": "Raw value the device reports at coolest (most blue) color temperature.",
-              "required": false
+              "description": "Raw value the device reports at coolest (most blue) color temperature."
             },
             "current_temperature_factor": {
               "title": "Temperature Factor",
               "type": "string",
               "pattern": "^\\d+(?:\\.\\d+)?$",
-              "description": "Multiplier for the current temperature reading. Use 0.1 if HomeKit shows 220 when the actual temperature is 22°C.",
-              "placeholder": "0.1",
-              "required": false
+              "description": "Multiplier for the current temperature reading. Use 0.1 if HomeKit shows 220 when the actual temperature is 22\u00b0C.",
+              "placeholder": "0.1"
             },
             "target_temperature_factor": {
               "title": "Target Temperature Factor",
               "type": "string",
               "pattern": "^\\d+(?:\\.\\d+)?$",
               "description": "Multiplier for the target temperature. Defaults to 1 (no change).",
-              "placeholder": "0.1",
-              "required": false
+              "placeholder": "0.1"
             },
             "cover_characteristics": {
               "title": "Features",
@@ -198,7 +216,9 @@
               "items": {
                 "title": "Feature",
                 "type": "string",
-                "enum": ["Stop"]
+                "enum": [
+                  "Stop"
+                ]
               }
             },
             "dimmer_characteristics": {
@@ -208,7 +228,9 @@
               "items": {
                 "title": "Feature",
                 "type": "string",
-                "enum": ["Brightness"]
+                "enum": [
+                  "Brightness"
+                ]
               }
             },
             "fan_characteristics": {
@@ -218,7 +240,9 @@
               "items": {
                 "title": "Feature",
                 "type": "string",
-                "enum": ["Speed"]
+                "enum": [
+                  "Speed"
+                ]
               }
             },
             "light_characteristics": {
@@ -228,39 +252,45 @@
               "items": {
                 "title": "Feature",
                 "type": "string",
-                "enum": ["Brightness", "Color", "Color Temperature"]
+                "enum": [
+                  "Brightness",
+                  "Color",
+                  "Color Temperature"
+                ]
               }
             }
-          }
+          },
+          "required": [
+            "id",
+            "device_type"
+          ]
         }
       },
       "scenes": {
         "title": "Expose Tuya scenes to HomeKit",
         "type": "boolean",
-        "required": true,
         "default": false
       },
       "scenesWhitelist": {
         "title": "Scenes to expose to HomeKit",
         "type": "array",
-        "required": false,
         "items": {
           "title": "Scene name or ID",
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       },
       "hiddenAccessories": {
         "title": "Accessories to hide from HomeKit",
         "type": "array",
-        "required": false,
         "items": {
           "title": "Accessory name or ID",
-          "type": "string",
-          "required": true
+          "type": "string"
         }
       }
-    }
+    },
+    "required": [
+      "options"
+    ]
   },
   "layout": [
     {
@@ -371,7 +401,9 @@
       "title": "Optional Settings",
       "expandable": true,
       "expanded": false,
-      "items": ["options.pollingInterval"]
+      "items": [
+        "options.pollingInterval"
+      ]
     },
     {
       "type": "fieldset",
@@ -385,8 +417,7 @@
           "description": "Accessories that should not be exposed to HomeKit.",
           "items": [
             {
-              "key": "hiddenAccessories[]",
-              "required": true
+              "key": "hiddenAccessories[]"
             }
           ]
         },
@@ -404,8 +435,7 @@
               },
               "items": [
                 {
-                  "key": "scenesWhitelist[]",
-                  "required": true
+                  "key": "scenesWhitelist[]"
                 }
               ]
             }
