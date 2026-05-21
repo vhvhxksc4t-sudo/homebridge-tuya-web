@@ -1,7 +1,7 @@
 {
     "displayName": "TuyaWebPlatform",
     "name": "@milo526/homebridge-tuya-web",
-    "version": "1.1.5",
+    "version": "2.0.0",
     "description": "Homebridge plugin for use with Tuya devices (uses Home Assistant Tuya Web API)",
     "main": "dist/src/index.js",
     "scripts": {
@@ -33,10 +33,10 @@
     },
     "repository": {
         "type": "git",
-        "url": "https://github.com/milo526/homebridge-tuya-web"
+        "url": "https://github.com/vhvhxksc4t-sudo/homebridge-tuya-web"
     },
     "bugs": {
-        "url": "https://github.com/milo526/homebridge-tuya-web/issues"
+        "url": "https://github.com/vhvhxksc4t-sudo/homebridge-tuya-web/issues"
     },
     "overrides": {
         "serialize-javascript": "^7.0.5",
