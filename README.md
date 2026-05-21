@@ -35,7 +35,7 @@ This plugin requires a free **Tuya IoT Platform** developer account. This is sep
    - **Project Name:** Anything descriptive, e.g. `Homebridge`
    - **Industry:** Smart Home
    - **Development Method:** Smart Home
-   - **Data Center:** Choose the region that matches where your Smart Life account was registered (see [Region Reference](#region-reference) below)
+   - **Data Center:** Choose the region where your Smart Life/Tuya app account was originally registered — this is **not** based on your physical location. If you're unsure, check your Smart Life app account settings, or try Western America first if your account was created in the US or Canada (see [Region Reference](#region-reference) below)
 4. Click **Create**
 5. On the **Authorize API Services** screen that appears, keep the pre-selected services and click **Authorize**. The essential services are:
    - IoT Core
@@ -62,7 +62,7 @@ This step connects your existing Tuya/Smart Life devices to the API project.
 5. A QR code will appear — scan it using the **Smart Life** or **Tuya Smart** app
 6. Your devices will appear in the **All Devices** tab once linked
 
-> **Important:** If your devices don't appear after linking, check that you selected the correct data center region when creating the project. The region must match the region where your Smart Life account is registered.
+> **Important:** If your devices don't appear after linking, the data center region is almost certainly wrong. The region is tied to where your Smart Life/Tuya account was **originally created**, not your physical location. You may need to delete the project and recreate it with a different region, or update your Smart Life account's region to match.
 
 ---
 
