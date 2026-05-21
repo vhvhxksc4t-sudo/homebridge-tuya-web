@@ -1,5 +1,5 @@
-# Ignore compiled code
-dist
+# Compiled output is committed so git installs work without a build step
+# dist
 # ------------- Defaults ------------- #
 # Logs
 logs
