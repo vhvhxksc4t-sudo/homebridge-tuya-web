@@ -118,9 +118,7 @@ export abstract class BaseAccessory {
     // Retrieve existing of create new Bridged Accessory
     if (homebridgeAccessory) {
       homebridgeAccessory.controller = this;
-      if (!homebridgeAccessory.context.deviceId) {
-        homebridgeAccessory.context.deviceId = this.deviceConfig.id;
-      }
+      homebridgeAccessory.context.deviceId ??= this.deviceConfig.id;
       this.log.info(
         "Existing Accessory found [Name: %s] [Tuya ID: %s] [HomeBridge ID: %s]",
         homebridgeAccessory.displayName,
@@ -160,8 +158,11 @@ export abstract class BaseAccessory {
     this.service = homebridgeAccessory.getService(this.serviceType);
     if (!this.service) {
       this.log.debug("Creating New Service %s", this.deviceConfig.id);
+      // Concrete service subclasses (Switch, Lightbulb, etc.) have (name?, subtype?) constructors
+      // but hap-nodejs types them against base Service(displayName, UUID, subtype?). Cast is intentional.
       this.service = homebridgeAccessory.addService(
-        this.serviceType,
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+        this.serviceType as any,
         this.deviceConfig.name,
       );
     }
@@ -257,7 +258,7 @@ export abstract class BaseAccessory {
   ): void {
     if (this.updateCallbackList.has(characteristic)) {
       const updateCallback = this.updateCallbackList.get(characteristic);
-      updateCallback && updateCallback(data);
+      updateCallback?.(data);
     }
   }
 
@@ -266,8 +267,9 @@ export abstract class BaseAccessory {
     value: Nullable<CharacteristicValue>,
     updateHomekit = false,
   ) {
-    updateHomekit &&
+    if (updateHomekit) {
       this.service?.getCharacteristic(characteristic).updateValue(value);
+    }
   }
 
   public onIdentify(): void {

@@ -57,10 +57,10 @@ export class TuyaWebApi {
       "GET",
     );
 
-    if (data.header && data.header.code === "SUCCESS") {
+    if (data.header?.code === "SUCCESS") {
       return data.payload.devices;
     } else {
-      if (data.header && data.header.code === "FrequentlyInvoke") {
+      if (data.header?.code === "FrequentlyInvoke") {
         throw new RateLimitError("Requesting too quickly.", data.header.msg);
       } else {
         throw new Error(`No valid response from API: ${JSON.stringify(data)}`);
@@ -90,10 +90,10 @@ export class TuyaWebApi {
       "GET",
     );
 
-    if (data.header && data.header.code === "SUCCESS") {
+    if (data.header?.code === "SUCCESS") {
       return data.payload.data;
     } else {
-      if (data.header && data.header.code === "FrequentlyInvoke") {
+      if (data.header?.code === "FrequentlyInvoke") {
         throw new RateLimitError("Requesting too quickly.", data.header.msg);
       } else {
         throw new Error(`No valid response from API: ${JSON.stringify(data)}`);
@@ -127,16 +127,16 @@ export class TuyaWebApi {
       "POST",
     );
 
-    if (data.header && data.header.code === "SUCCESS") {
+    if (data.header?.code === "SUCCESS") {
       return;
-    } else if (data.header && data.header.code === "FrequentlyInvoke") {
+    } else if (data.header?.code === "FrequentlyInvoke") {
       throw new RateLimitError("Requesting too quickly.", data.header.msg);
-    } else if (data.header && data.header.code === "UnsupportedOperation") {
+    } else if (data.header?.code === "UnsupportedOperation") {
       throw new UnsupportedOperationError(
         "Unsupported Operation",
         "The action you tried to perform is not valid for the current device. Please disable it.",
       );
-    } else if (data.header && data.header.code === "TargetOffline") {
+    } else if (data.header?.code === "TargetOffline") {
       throw new DeviceOfflineError();
     } else {
       throw new Error(`Invalid payload in response: ${JSON.stringify(data)}`);
@@ -196,9 +196,7 @@ export class TuyaWebApi {
     if (data.responseStatus === "error") {
       if (typeof data.errorMsg === "string" && !retryingAfterError) {
         // If we are requesting tokens too often we get an error: like "you cannot auth exceed once in 180 seconds"
-        const matches = data.errorMsg.match(
-          /you cannot auth exceed once in (\d+) seconds/,
-        );
+        const matches = /you cannot auth exceed once in (\d+) seconds/.exec(data.errorMsg);
 
         if (matches) {
           const waitTime = parseInt(matches[1]) + 5;

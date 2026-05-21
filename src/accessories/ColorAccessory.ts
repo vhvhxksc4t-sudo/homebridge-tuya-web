@@ -63,9 +63,7 @@ export abstract class ColorAccessory extends BaseAccessory {
   public setColor(
     color: Partial<{ hue: number; saturation: number }>,
   ): Promise<void> {
-    if (!this.debouncePromise) {
-      this.debouncePromise = new DebouncedPromise<void>();
-    }
+    this.debouncePromise ??= new DebouncedPromise<void>();
 
     this.hue = color.hue ?? this.hue;
     this.saturation = color.saturation ?? this.saturation;

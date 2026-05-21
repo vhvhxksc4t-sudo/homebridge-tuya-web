@@ -65,7 +65,7 @@ export class TuyaWebPlatform implements DynamicPlatformPlugin {
   ) {
     this.log.debug("Finished initializing platform:", this.config.name);
 
-    if (!config || !config.options) {
+    if (!config?.options) {
       this.log.info(
         "No options found in configuration file, disabling plugin.",
       );
