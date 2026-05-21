@@ -28,8 +28,8 @@
     "access": "public"
   },
   "engines": {
-    "node": ">=18.15.0",
-    "homebridge": ">=1.0.0"
+    "node": "^18.15.0 || ^20.7.0 || ^22.0.0 || ^24.0.0",
+    "homebridge": "^1.6.0 || ^2.0.0"
   },
   "repository": {
     "type": "git",
@@ -56,7 +56,7 @@
     "chai": "^4.5.0",
     "eslint": "^8.57.1",
     "eslint-config-prettier": "^10.1.8",
-    "homebridge": "^1.11.4",
+    "homebridge": "^2.0.2",
     "mocha": "^10.7.3",
     "nodemon": "^3.1.14",
     "np": "^11.2.1",
