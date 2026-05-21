@@ -23,7 +23,6 @@ import { AuthenticationError } from "./errors";
 import { DeviceList } from "./helpers/DeviceList";
 import { TuyaDevice, TuyaDeviceType, TuyaDeviceTypes } from "./api/response";
 import { TuyaWebApi } from "./api/service";
-import { TuyaPlatforms } from "./api/platform";
 import { GarageDoorAccessory } from "./accessories/GarageDoorAccessory";
 import { TemperatureSensorAccessory } from "./accessories/TemperatureSensorAccessory";
 import { Cache } from "./helpers/cache";
@@ -74,34 +73,23 @@ export class TuyaWebPlatform implements DynamicPlatformPlugin {
     const options = config.options;
 
     if (
-      options.username === undefined ||
-      options.password === undefined ||
-      options.countryCode === undefined
-    ) {
-      this.log.error("Missing required config parameter.");
-      return;
-    }
-
-    if (
-      options.platform !== undefined &&
-      !TuyaPlatforms.includes(options.platform)
+      options.accessId === undefined ||
+      options.accessSecret === undefined
     ) {
       this.log.error(
-        "Invalid platform provided, received %s but must be one of %s",
-        options.platform,
-        TuyaPlatforms,
+        "Missing required config parameters: accessId and accessSecret.",
       );
+      return;
     }
 
     // Set cloud polling interval
     this.pollingInterval = config.options.pollingInterval;
 
-    // Create Tuya Web API instance
+    // Create Tuya IoT Platform API instance
     this.tuyaWebApi = new TuyaWebApi(
-      options.username,
-      options.password,
-      options.countryCode,
-      options.platform,
+      options.accessId,
+      options.accessSecret,
+      options.region ?? "us",
       this.log,
     );
 

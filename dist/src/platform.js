@@ -7,7 +7,6 @@ const errors_1 = require("./errors");
 const DeviceList_1 = require("./helpers/DeviceList");
 const response_1 = require("./api/response");
 const service_1 = require("./api/service");
-const platform_1 = require("./api/platform");
 const GarageDoorAccessory_1 = require("./accessories/GarageDoorAccessory");
 const TemperatureSensorAccessory_1 = require("./accessories/TemperatureSensorAccessory");
 const WindowAccessory_1 = require("./accessories/WindowAccessory");
@@ -18,6 +17,7 @@ const WindowAccessory_1 = require("./accessories/WindowAccessory");
  */
 class TuyaWebPlatform {
     constructor(log, config, api) {
+        var _a;
         this.log = log;
         this.config = config;
         this.api = api;
@@ -32,20 +32,15 @@ class TuyaWebPlatform {
             return;
         }
         const options = config.options;
-        if (options.username === undefined ||
-            options.password === undefined ||
-            options.countryCode === undefined) {
-            this.log.error("Missing required config parameter.");
+        if (options.accessId === undefined ||
+            options.accessSecret === undefined) {
+            this.log.error("Missing required config parameters: accessId and accessSecret.");
             return;
-        }
-        if (options.platform !== undefined &&
-            !platform_1.TuyaPlatforms.includes(options.platform)) {
-            this.log.error("Invalid platform provided, received %s but must be one of %s", options.platform, platform_1.TuyaPlatforms);
         }
         // Set cloud polling interval
         this.pollingInterval = config.options.pollingInterval;
-        // Create Tuya Web API instance
-        this.tuyaWebApi = new service_1.TuyaWebApi(options.username, options.password, options.countryCode, options.platform, this.log);
+        // Create Tuya IoT Platform API instance
+        this.tuyaWebApi = new service_1.TuyaWebApi(options.accessId, options.accessSecret, (_a = options.region) !== null && _a !== void 0 ? _a : "us", this.log);
         // When this event is fired it means Homebridge has restored all cached accessories from disk.
         // Dynamic Platform plugins should only register new accessories after this event was fired,
         // in order to ensure they weren't added to homebridge already. This event can also be used

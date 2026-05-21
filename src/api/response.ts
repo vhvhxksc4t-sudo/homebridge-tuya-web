@@ -67,39 +67,6 @@ export interface TuyaDevice {
   config?: Partial<TuyaDeviceDefaults> & { old_dev_type: TuyaDeviceType };
 }
 
-export interface TuyaRequestHeader {
-  name: "Discovery" | "QueryDevice" | TuyaApiMethod;
-  namespace: "discovery" | "query" | "control";
-  payloadVersion: 1;
-}
-
-export interface TuyaResponseHeader {
-  /* eslint-disable @typescript-eslint/no-redundant-type-constituents */
-  code:
-    | "FrequentlyInvoke"
-    | "SUCCESS"
-    | "TargetOffline"
-    | "UnsupportedOperation"
-    | string;
-  /* eslint-enable @typescript-eslint/no-redundant-type-constituents */
-  payloadVersion: 1;
-  msg?: string;
-}
-
-export interface DiscoveryPayload {
-  payload: {
-    devices: TuyaDevice[];
-  };
-  header: TuyaResponseHeader;
-}
-
-export interface DeviceQueryPayload {
-  payload: {
-    data: DeviceState;
-  };
-  header: TuyaResponseHeader;
-}
-
 export type TuyaApiMethod =
   | "brightnessSet"
   | "colorSet"
@@ -113,17 +80,17 @@ export type TuyaApiPayload<Method extends TuyaApiMethod> =
   Method extends "brightnessSet"
     ? { value: number }
     : Method extends "colorSet"
-    ? { color: { hue: number; saturation: number; brightness: number } }
-    : Method extends "colorTemperatureSet"
-    ? { value: number }
-    : Method extends "modeSet"
-    ? { value: ClimateMode }
-    : Method extends "startStop"
-    ? { value: 0 }
-    : Method extends "temperatureSet"
-    ? { value: number }
-    : Method extends "turnOnOff"
-    ? { value: 0 | 1 }
-    : Method extends "windSpeedSet"
-    ? { value: number }
-    : never;
+      ? { color: { hue: number; saturation: number; brightness: number } }
+      : Method extends "colorTemperatureSet"
+        ? { value: number }
+        : Method extends "modeSet"
+          ? { value: ClimateMode }
+          : Method extends "startStop"
+            ? { value: 0 }
+            : Method extends "temperatureSet"
+              ? { value: number }
+              : Method extends "turnOnOff"
+                ? { value: 0 | 1 }
+                : Method extends "windSpeedSet"
+                  ? { value: number }
+                  : never;
