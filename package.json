@@ -1,7 +1,7 @@
 {
   "displayName": "TuyaWebPlatform",
-  "name": "@vhvhxksc4t/homebridge-tuya-web",
-  "version": "2.0.0",
+  "name": "homebridge-tuya-web-v2",
+  "version": "2.0.1",
   "description": "Homebridge plugin for use with Tuya devices (uses Home Assistant Tuya Web API)",
   "main": "dist/src/index.js",
   "scripts": {
@@ -26,6 +26,9 @@
   "license": "MIT",
   "publishConfig": {
     "access": "public"
+  },
+  "peerDependencies": {
+    "homebridge": ">=1.6.0"
   },
   "engines": {
     "node": "^18.15.0 || ^20.7.0 || ^22.0.0 || ^24.0.0",
