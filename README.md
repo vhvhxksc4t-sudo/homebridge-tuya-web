@@ -71,7 +71,7 @@ This step connects your existing Tuya/Smart Life devices to the API project.
 Install via npm (once published) or via the Homebridge UI plugin search:
 
 ```bash
-npm install -g @milo526/homebridge-tuya-web
+npm install -g @vhvhxksc4t/homebridge-tuya-web
 ```
 
 Or install the latest from GitHub directly on your Homebridge host:
@@ -79,8 +79,8 @@ Or install the latest from GitHub directly on your Homebridge host:
 ```bash
 # From the Homebridge terminal
 git clone https://github.com/vhvhxksc4t-sudo/homebridge-tuya-web.git /tmp/tuya-plugin
-cp -r /tmp/tuya-plugin /var/lib/homebridge/node_modules/@milo526/homebridge-tuya-web
-cd /var/lib/homebridge/node_modules/@milo526/homebridge-tuya-web && npm install --production
+cp -r /tmp/tuya-plugin /var/lib/homebridge/node_modules/@vhvhxksc4t/homebridge-tuya-web
+cd /var/lib/homebridge/node_modules/@vhvhxksc4t/homebridge-tuya-web && npm install --production
 sudo hb-service restart
 ```
 
